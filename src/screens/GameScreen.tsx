@@ -113,11 +113,23 @@ const onPhysics = (entities: any, { time }: any) => {
 const onMovePlank = (entities: any, { touches }: any) => {
   let move = touches.find((x: { type: string }) => x.type === 'move');
   if (move) {
-    const newPosition = {
-      x: plankOne.position.x,
-      y: plankOne.position.y + move.delta.pageY,
-    };
-    Matter.Body.setPosition(plankOne, newPosition);
+    console.debug(move);
+
+    if (move.event.locationX < GAME_WIDTH / 2) {
+      // Swipe was on left hand side, move plankOne
+      const newPosition = {
+        x: plankOne.position.x,
+        y: plankOne.position.y + move.delta.pageY,
+      };
+      Matter.Body.setPosition(plankOne, newPosition);
+    } else {
+      // Swipe was on right hand side, move plankTwp
+      const newPosition = {
+        x: plankTwo.position.x,
+        y: plankTwo.position.y + move.delta.pageY,
+      };
+      Matter.Body.setPosition(plankTwo, newPosition);      
+    }
   }
 
   return entities;
@@ -229,6 +241,33 @@ export default class Game extends Component {
       leftWall,
       rightWall,
     ]);
+  }
+
+  componentDidMount() {
+    Matter.Body.setVelocity(ball, { x: 3, y: 0 });
+    Matter.Sleeping.set(ball, true);
+
+    Matter.Events.on(engine, 'collisionStart', event => {
+      var pairs = event.pairs;
+
+      var objectA = pairs[0].bodyA.label;
+      var objectB = pairs[0].bodyB.label;
+
+      // If ball hits the right wall, score a point for me
+      if (objectA == 'ball' && objectB == 'rightWall') {
+        this.setState(
+          { myScore: +this.state.myScore +1 },
+          () => {
+            Matter.Body.setPosition(ball, {
+              x: BALL_START_POINT_X,
+              y: BALL_START_POINT_Y,
+            });
+          }
+        );
+      }
+
+      //TODO: Handle opponent scoring on opposite wall
+    })
   }
 
   render() {
