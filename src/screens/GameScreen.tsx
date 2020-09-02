@@ -18,6 +18,9 @@ const BALL_START_POINT_X = GAME_WIDTH / 2 - BALL_SIZE;
 const BALL_START_POINT_Y = GAME_HEIGHT / 2;
 const BORDER = 15;
 
+const PLANK_ONE_COLOR = '#a6e22c';
+const PLANK_TWO_COLOR = '#7198e6';
+
 const WINNING_SCORE = 5;
 
 const plankSettings = {
@@ -123,7 +126,7 @@ const onMovePlank = (entities: any, { touches }: any) => {
       };
       Matter.Body.setPosition(plankOne, newPosition);
     } else {
-      // Swipe was on right hand side, move plankTwp
+      // Swipe was on right hand side, move plankTwo
       const newPosition = {
         x: plankTwo.position.x,
         y: plankTwo.position.y + move.delta.pageY,
@@ -150,19 +153,22 @@ const styles = StyleSheet.create({
   score: {
     flexDirection: 'row',
   },
-  scoreLabel: {
-    fontSize: 20,
-  },
-  scoreValue: {
-    fontSize: 20,
+  plankOneScore: {
+    fontSize: 40,
     fontWeight: 'bold',
+    color: PLANK_ONE_COLOR,
+  },
+  plankTwoScore: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: PLANK_TWO_COLOR,
   },
 });
 
 export default class Game extends Component {
   state = {
-    myScore: 0,
-    opponentScore: 0,
+    plankOneScore: 0,
+    plankTwoScore: 0,
   };
 
   entities = {
@@ -178,14 +184,14 @@ export default class Game extends Component {
     playerOnePlank: {
       body: plankOne,
       size: [PLANK_WIDTH, PLANK_HEIGHT],
-      color: '#a6e22c',
+      color: PLANK_ONE_COLOR,
       renderer: Box,
       xAdjustment: 30,
     },
     playerTwoPlank: {
       body: plankTwo,
       size: [PLANK_WIDTH, PLANK_HEIGHT],
-      color: '#7198e6',
+      color: PLANK_TWO_COLOR,
       renderer: Box,
       type: 'rightPlank',
       xAdjustment: -33,
@@ -221,7 +227,6 @@ export default class Game extends Component {
   };
 
   movePlankInterval: any = null;
-  myPlankColor: string = 'Pong';
   myplank = planks.plankOne;
 
   constructor(props: any) {
@@ -245,7 +250,7 @@ export default class Game extends Component {
 
   componentDidMount() {
     Matter.Body.setVelocity(ball, { x: 3, y: 0 });
-    Matter.Sleeping.set(ball, true);
+    Matter.Sleeping.set(ball, false);
 
     Matter.Events.on(engine, 'collisionStart', event => {
       var pairs = event.pairs;
@@ -253,10 +258,10 @@ export default class Game extends Component {
       var objectA = pairs[0].bodyA.label;
       var objectB = pairs[0].bodyB.label;
 
-      // If ball hits the right wall, score a point for me
+      // If ball hits the right wall, score a point for plankOne and reset ball
       if (objectA == 'ball' && objectB == 'rightWall') {
         this.setState(
-          { myScore: +this.state.myScore +1 },
+          { plankOneScore: +this.state.plankOneScore +1 },
           () => {
             Matter.Body.setPosition(ball, {
               x: BALL_START_POINT_X,
@@ -266,7 +271,23 @@ export default class Game extends Component {
         );
       }
 
-      //TODO: Handle opponent scoring on opposite wall
+      // If ball hits the right wall, score a point for plankTwo and reset ball
+      if (objectA == 'ball' && objectB == 'leftWall') {
+        this.setState(
+          { plankTwoScore: +this.state.plankTwoScore +1 },
+          () => {
+            Matter.Body.setPosition(ball, {
+              x: BALL_START_POINT_X,
+              y: BALL_START_POINT_Y,
+            });
+          }
+        );
+      }
+
+      // If either player has reached the winning score, stop moving the ball
+      if (this.state.plankOneScore == WINNING_SCORE || this.state.plankTwoScore == WINNING_SCORE) {
+        Matter.Sleeping.set(ball, true);
+      }
     })
   }
 
@@ -278,8 +299,8 @@ export default class Game extends Component {
         entities={this.entities}>
         <View style={styles.scoresContainer}>
           <View style={styles.score}>
-            <Text style={styles.scoreLabel}>{this.myPlankColor}</Text>
-            <Text style={styles.scoreValue}> {this.state.myScore}</Text>
+            <Text style={styles.plankOneScore}>{this.state.plankOneScore}</Text>
+            <Text style={styles.plankTwoScore}> {this.state.plankTwoScore}</Text>
           </View>
         </View>
       </GameEngine>
