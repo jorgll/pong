@@ -1,12 +1,13 @@
 import Matter, { IEventCollision } from 'matter-js';
 import { entities } from '../entities/entities';
 import { play, sounds } from './sound';
+import { GameEngineUpdateEventOptionType } from 'react-native-game-engine';
 
 const WINNING_SCORE = 5;
 
 // Physics system
 // Update Matter.js world with each tick
-export const onPhysics = (entities: any, { time }: any) => {
+export const onPhysics = (entities: any, { time }: GameEngineUpdateEventOptionType ) => {
   let engine = entities.physics.engine;
   engine.world.gravity.y = 0;
   Matter.Engine.update(engine, time.delta);
@@ -16,9 +17,9 @@ export const onPhysics = (entities: any, { time }: any) => {
 
 // Touch system
 // Find if there are inputs, map those to the right player, and update position in space
-export const onTouch = (entities: any, { touches }: any) => {
+export const onTouch = (entities: any, { touches }: GameEngineUpdateEventOptionType ) => {
   let move = touches.find((x: { type: string }) => x.type === 'move');
-  if (move) {
+  if (move && move.delta) {
     if (move.event.locationX < entities.viewport.width / 2) {
       // Swipe was on left hand side, move plankOne
       const newPosition = {
