@@ -1,5 +1,6 @@
 import Matter, { IEventCollision } from 'matter-js';
 import { entities } from '../entities/entities';
+import { play, sounds } from './sound';
 
 const WINNING_SCORE = 5;
 
@@ -46,18 +47,30 @@ export const onCollision = (event: IEventCollision<Matter.Engine>) => {
   var objectA = pairs[0].bodyA.label;
   var objectB = pairs[0].bodyB.label;
 
-  // If ball hits the right wall, score a point for plankOne and reset ball
+  // If ball hits plank one, play boop
+  if (objectA == 'ball' && objectB == 'plankOne') {
+    play(sounds[2]);
+  }
+
+  // If ball hits plank one, play beep
+  if (objectA == 'ball' && objectB == 'plankTwo') {
+    play(sounds[3]);
+  }
+
+  // If ball hits the right wall, score a point for plankOne, play bleep, and reset ball
   if (objectA == 'ball' && objectB == 'rightWall') {
     entities.score.plankOne += 1;
+    play(sounds[0]);
     Matter.Body.setPosition(entities.ball.body, {
           x: entities.ball.startingPointX,
           y: entities.ball.startingPointY,
         });
     }
 
-    // If ball hits the left wall, score a point for plankTwo and reset ball
+    // If ball hits the left wall, score a point for plankTwo, play bloop, and reset ball
     if (objectA == 'ball' && objectB == 'leftWall') {
       entities.score.plankTwo += 1;
+      play(sounds[1]);
       Matter.Body.setPosition(entities.ball.body, {
         x: entities.ball.startingPointX,
         y: entities.ball.startingPointY,
@@ -69,5 +82,5 @@ export const onCollision = (event: IEventCollision<Matter.Engine>) => {
     Matter.Sleeping.set(entities.ball.body, true);
   }
 
-  console.info(entities.score);
+  console.info('New score: ', entities.score);
 }

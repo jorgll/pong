@@ -18,6 +18,10 @@
 		2E103A387565D06343048F90 /* libPods-Pong-PongTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D86D00BAD705B7476F7C5E /* libPods-Pong-PongTests.a */; };
 		74887CD6358CC7431FD65040 /* libPods-Pong.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C579CDC19C705C4CC69738E /* libPods-Pong.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		CF179697250171B900AF3741 /* blipd3.wav in Resources */ = {isa = PBXBuildFile; fileRef = CF179693250171B900AF3741 /* blipd3.wav */; };
+		CF179698250171B900AF3741 /* blipg5.wav in Resources */ = {isa = PBXBuildFile; fileRef = CF179694250171B900AF3741 /* blipg5.wav */; };
+		CF179699250171B900AF3741 /* blipd5.wav in Resources */ = {isa = PBXBuildFile; fileRef = CF179695250171B900AF3741 /* blipd5.wav */; };
+		CF17969A250171B900AF3741 /* blipg3.wav in Resources */ = {isa = PBXBuildFile; fileRef = CF179696250171B900AF3741 /* blipg3.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +61,10 @@
 		9D8166D9F02ED193E9DA2B6A /* Pods-Pong.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pong.release.xcconfig"; path = "Target Support Files/Pods-Pong/Pods-Pong.release.xcconfig"; sourceTree = "<group>"; };
 		A9D86D00BAD705B7476F7C5E /* libPods-Pong-PongTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pong-PongTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD0C9E53C337E00C294C5E98 /* Pods-Pong-PongTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pong-PongTests.release.xcconfig"; path = "Target Support Files/Pods-Pong-PongTests/Pods-Pong-PongTests.release.xcconfig"; sourceTree = "<group>"; };
+		CF179693250171B900AF3741 /* blipd3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = blipd3.wav; path = ../android/app/src/main/res/raw/blipd3.wav; sourceTree = "<group>"; };
+		CF179694250171B900AF3741 /* blipg5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = blipg5.wav; path = ../android/app/src/main/res/raw/blipg5.wav; sourceTree = "<group>"; };
+		CF179695250171B900AF3741 /* blipd5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = blipd5.wav; path = ../android/app/src/main/res/raw/blipd5.wav; sourceTree = "<group>"; };
+		CF179696250171B900AF3741 /* blipg3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = blipg3.wav; path = ../android/app/src/main/res/raw/blipg3.wav; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -145,7 +153,6 @@
 				826B75B7E200534696381874 /* Pods-Pong-PongTests.debug.xcconfig */,
 				AD0C9E53C337E00C294C5E98 /* Pods-Pong-PongTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -159,6 +166,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				CF179693250171B900AF3741 /* blipd3.wav */,
+				CF179695250171B900AF3741 /* blipd5.wav */,
+				CF179696250171B900AF3741 /* blipg3.wav */,
+				CF179694250171B900AF3741 /* blipg5.wav */,
 				13B07FAE1A68108700A75B9A /* Pong */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PongTests */,
@@ -322,8 +333,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF179697250171B900AF3741 /* blipd3.wav in Resources */,
+				CF179698250171B900AF3741 /* blipg5.wav in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				CF17969A250171B900AF3741 /* blipg3.wav in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				CF179699250171B900AF3741 /* blipd5.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
